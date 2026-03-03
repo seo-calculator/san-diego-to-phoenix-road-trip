@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>San Diego to Phoenix Road Trip Planner | Riders Share</title>
+  <meta name="description" content="Interactive road trip planner from San Diego to Phoenix. Build your custom route, get local tips on gas, food, water and cell signal, and find attractions along I-8 East.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.riders-share.com/blog/article/san-diego-to-phoenix-road-trip-guide">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="San Diego to Phoenix Road Trip Planner | Riders Share">
+  <meta property="og:description" content="Interactive road trip planner from San Diego to Phoenix. Build your custom route with local tips and attractions along I-8 East.">
+  <meta property="og:image" content="https://images.prismic.io/riders-sharecom/Ziqqz_Pdc1huK1jK_3-3--featuresandiegotophoenixroadtrip.png?auto=format,compress">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="San Diego to Phoenix Road Trip Planner | Riders Share">
+  <meta name="twitter:description" content="Interactive road trip planner from San Diego to Phoenix. Build your custom route with local tips and attractions along I-8 East.">
+  <meta name="twitter:image" content="https://images.prismic.io/riders-sharecom/Ziqqz_Pdc1huK1jK_3-3--featuresandiegotophoenixroadtrip.png?auto=format,compress">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: linear-gradient(165deg, #FFF8EE 0%, #F5E6D0 30%, #FAECD8 60%, #FFF5E1 100%);
+      color: #2C1810;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #D4C4A8; border-radius: 3px; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+    img { max-width: 100%; display: block; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(232,114,74,0.3); }
+      50% { box-shadow: 0 0 12px 4px rgba(232,114,74,0.15); }
+    }
+    .animate-in {
+      animation: fadeSlideIn 0.4s ease forwards;
+    }
+
+    /* ─── VARIABLES ─── */
+    :root {
+      --c-brand: #E8724A;
+      --c-brand-dark: #C55A36;
+      --c-bark: #2C1810;
+      --c-bark-mid: #4A3D30;
+      --c-bark-light: #6B5C4C;
+      --c-sand: #A68B6B;
+      --c-sand-light: #C4B49A;
+      --c-cream: #FFF5E1;
+      --c-cream-dark: #FAECD8;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 0 28px 28px;
+    }
+    .hero__inner {
+      position: relative;
+      min-height: 340px;
+      background: linear-gradient(to bottom, rgba(44,24,16,0.08) 0%, rgba(44,24,16,0.72) 100%),
+                  url('https://images.prismic.io/riders-sharecom/Ziqqz_Pdc1huK1jK_3-3--featuresandiegotophoenixroadtrip.png?auto=format,compress') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px 28px;
+    }
+    .hero__badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--c-brand);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: rgba(0,0,0,0.38);
+      padding: 5px 14px;
+      border-radius: 20px;
+      width: fit-content;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      margin-bottom: 10px;
+    }
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 7vw, 46px);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.3);
+    }
+    .hero__subtitle {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.55;
+      max-width: 480px;
+    }
+
+    /* ─── STATS ─── */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      padding: 22px 20px 8px;
+      flex-wrap: wrap;
+    }
+    .stat__value {
+      font-family: var(--font-display);
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--c-bark);
+    }
+    .stat__label {
+      font-size: 10px;
+      color: var(--c-sand);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ─── INSTRUCTIONS ─── */
+    .instructions {
+      padding: 16px 24px 4px;
+      max-width: 660px;
+      font-size: 14px;
+      color: var(--c-bark-light);
+      line-height: 1.65;
+    }
+    .instructions strong { color: var(--c-bark-mid); }
+
+    /* ─── CONTROLS ─── */
+    .controls {
+      padding: 12px 24px 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .controls__btn {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--c-bark-light);
+      background: rgba(166,139,107,0.1);
+      border: 1px solid rgba(166,139,107,0.2);
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s;
+    }
+    .controls__btn:hover { background: rgba(166,139,107,0.2); }
+
+    /* ─── TRIP SUMMARY ─── */
+    .trip-summary {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(135deg, #2C1810 0%, #4A2E1F 100%);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin: 0 20px 20px;
+      display: none;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      box-shadow: 0 8px 32px rgba(44,24,16,0.25);
+    }
+    .trip-summary.visible { display: flex; }
+    .trip-summary__label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--c-brand);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .trip-summary__stats {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .trip-summary__stat-val {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--c-cream);
+    }
+    .trip-summary__stat-lab {
+      font-size: 10px;
+      color: var(--c-sand);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .trip-summary__route {
+      font-size: 11px;
+      color: rgba(255,245,225,0.7);
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      max-width: 320px;
+    }
+    .trip-summary__route-arrow { color: var(--c-brand); margin: 0 1px; }
+
+    /* ─── DRIVE CONNECTOR ─── */
+    .drive-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 0 10px;
+      gap: 8px;
+    }
+    .drive-connector__line {
+      height: 1px;
+      flex: 1;
+      max-width: 60px;
+      background: rgba(166,139,107,0.2);
+    }
+    .drive-connector__text {
+      font-size: 11px;
+      color: var(--c-sand);
+    }
+
+    /* ─── STOP CARD ─── */
+    .stop-card {
+      background: rgba(255,250,240,0.5);
+      border-radius: var(--radius-lg);
+      border: 2px solid rgba(166,139,107,0.12);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .stop-card.selected {
+      background: rgba(232,114,74,0.06);
+      border-color: var(--c-brand);
+    }
+    .stop-card__header {
+      display: flex;
+      align-items: flex-start;
+      padding: 18px 18px 14px;
+      gap: 14px;
+    }
+
+    /* Checkbox */
+    .stop-card__check {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 2px solid var(--c-sand-light);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+    .stop-card__check.checked {
+      border-color: var(--c-brand);
+      background: var(--c-brand);
+    }
+    .stop-card__check svg { display: none; }
+    .stop-card__check.checked svg { display: block; }
+
+    .stop-card__info { flex: 1; }
+    .stop-card__title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+    .stop-card__city {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--c-bark);
+    }
+    .stop-card__mile {
+      font-size: 11px;
+      color: var(--c-sand);
+      background: rgba(166,139,107,0.1);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .stop-card__drive-from {
+      font-size: 11px;
+      color: #8B7B6B;
+    }
+    .stop-card__toggles {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .stop-card__toggle-btn {
+      font-size: 11px;
+      font-weight: 600;
+      color: #8B7B6B;
+      background: rgba(166,139,107,0.08);
+      padding: 4px 10px;
+      border-radius: 16px;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .stop-card__toggle-btn.active {
+      color: var(--c-brand);
+      background: rgba(232,114,74,0.08);
+    }
+
+    /* Tips Panel */
+    .stop-card__tips {
+      padding: 0 18px 16px 60px;
+      display: none;
+    }
+    .stop-card__tips.visible {
+      display: block;
+      animation: fadeSlideIn 0.3s ease forwards;
+    }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .tip-card {
+      background: rgba(255,245,225,0.7);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .tip-card__icon { font-size: 18px; line-height: 1; }
+    .tip-card__label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--c-bark-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 3px;
+    }
+    .tip-card__text {
+      font-size: 13px;
+      color: var(--c-bark-mid);
+      line-height: 1.45;
+    }
+
+    /* Attractions Panel */
+    .stop-card__attractions {
+      padding: 0 18px 18px 60px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .stop-card__attractions.visible {
+      display: flex;
+      animation: fadeSlideIn 0.3s ease forwards;
+    }
+    .attraction {
+      background: rgba(255,245,225,0.6);
+      border-radius: 12px;
+      padding: 14px 16px;
+      border-left: 3px solid var(--c-brand);
+    }
+    .attraction__header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+    .attraction__name {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--c-bark);
+    }
+    .attraction__gbp {
+      font-size: 11px;
+      color: var(--c-brand);
+      font-weight: 600;
+      background: rgba(232,114,74,0.08);
+      padding: 2px 8px;
+      border-radius: 10px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .attraction__gbp:hover { background: rgba(232,114,74,0.18); }
+    .attraction__desc {
+      font-size: 13px;
+      color: var(--c-bark-light);
+      line-height: 1.5;
+    }
+
+    /* ─── CTA BLOCK ─── */
+    .cta-block {
+      background: linear-gradient(135deg, #2C1810 0%, #4A2E1F 50%, #3D2015 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin: 0 20px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-block__glow {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,114,74,0.2) 0%, transparent 70%);
+    }
+    .cta-block__tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--c-brand);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .cta-block__title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--c-cream);
+      margin-bottom: 10px;
+      line-height: 1.3;
+      position: relative;
+    }
+    .cta-block__desc {
+      font-size: 13px;
+      color: rgba(255,245,225,0.7);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      max-width: 440px;
+      position: relative;
+    }
+    .cta-block__buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .cta-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      background: var(--c-brand);
+      color: #fff;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(232,114,74,0.4);
+    }
+    .cta-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      background: rgba(255,245,225,0.12);
+      color: var(--c-cream);
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid rgba(255,245,225,0.2);
+      transition: background 0.2s;
+    }
+    .cta-btn-secondary:hover { background: rgba(255,245,225,0.22); }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      text-align: center;
+      padding: 0 24px 36px;
+    }
+    .footer__disclaimer {
+      font-size: 11px;
+      color: var(--c-sand);
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto 14px;
+    }
+    .footer__article-link {
+      font-size: 13px;
+      color: var(--c-brand);
+      font-weight: 600;
+    }
+    .footer__copyright {
+      font-size: 11px;
+      color: var(--c-sand);
+      margin-top: 8px;
+    }
+
+    /* ─── STOP LIST CONTAINER ─── */
+    .stops-list { padding: 0 20px 24px; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 520px) {
+      .hero__inner { min-height: 280px; padding: 24px 20px; }
+      .stats-bar { gap: 20px; }
+      .trip-summary { padding: 14px 16px; gap: 12px; }
+      .stop-card__header { padding: 14px 14px 12px; gap: 10px; }
+      .stop-card__tips.visible { padding: 0 14px 14px 46px; }
+      .stop-card__attractions.visible { padding: 0 14px 14px 46px; }
+      .stop-card__city { font-size: 17px; }
+      .tips-grid { grid-template-columns: 1fr; }
+      .cta-block { margin: 0 16px 24px; padding: 22px 18px; }
+    }
+  </style>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAction",
+    "name": "San Diego to Phoenix Road Trip",
+    "description": "Interactive road trip planner from San Diego, CA to Phoenix, AZ via I-8 East. 355 miles with stops at Imperial Sand Dunes, Yuma, Gila Bend, and Casa Grande.",
+    "fromLocation": {
+      "@type": "Place",
+      "name": "San Diego, CA",
+      "geo": { "@type": "GeoCoordinates", "latitude": 32.7157, "longitude": -117.1611 }
+    },
+    "toLocation": {
+      "@type": "Place",
+      "name": "Phoenix, AZ",
+      "geo": { "@type": "GeoCoordinates", "latitude": 33.4484, "longitude": -112.0740 }
+    },
+    "provider": {
+      "@type": "Organization",
+      "name": "Riders Share",
+      "url": "https://www.riders-share.com",
+      "logo": "https://images.prismic.io/riders-sharecom/aRyKgGGnmrmGp_Hh_logo_black_background_v2.png?auto=format,compress"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero__inner">
+      <div class="hero__badge">Interactive Road Trip Planner</div>
+      <h1 class="hero__title">San Diego<br>to Phoenix</h1>
+      <p class="hero__subtitle">Build your custom route. Check the stops you want, get local tips for each one, and watch your trip summary update in real time.</p>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div style="text-align:center"><div class="stat__value">355 mi</div><div class="stat__label">Total Distance</div></div>
+    <div style="text-align:center"><div class="stat__value">5.5 hrs</div><div class="stat__label">Direct Drive</div></div>
+    <div style="text-align:center"><div class="stat__value">I-8 East</div><div class="stat__label">Main Route</div></div>
+    <div style="text-align:center"><div class="stat__value">CA + AZ</div><div class="stat__label">States</div></div>
+  </div>
+
+  <!-- INSTRUCTIONS -->
+  <div class="instructions">
+    Check the stops you plan to visit and the <strong>trip summary bar</strong> will update with your custom route, total miles, and estimated drive time. Tap <strong>Local Tips</strong> on any stop for gas, food, water, and cell info. Tap <strong>Attractions</strong> to see what to do and link to their Google profiles.
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button class="controls__btn" id="selectAllBtn" onclick="toggleSelectAll()">Select All Stops</button>
+    <button class="controls__btn" id="expandAllBtn" onclick="toggleExpandAll()">Expand All Attractions</button>
+  </div>
+
+  <!-- TRIP SUMMARY -->
+  <div class="trip-summary" id="tripSummary">
+    <div class="trip-summary__label">Your Trip</div>
+    <div class="trip-summary__stats" id="tripStats"></div>
+    <div class="trip-summary__route" id="tripRoute"></div>
+  </div>
+
+  <!-- STOPS LIST -->
+  <div class="stops-list" id="stopsList"></div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <div class="cta-block__glow"></div>
+    <div class="cta-block__tag">Explore by Motorcycle</div>
+    <h2 class="cta-block__title">Want a Local to Show You Around Arizona?</h2>
+    <p class="cta-block__desc">Riders Share offers guided motorcycle tours near Phoenix led by locals who know the desert roads, the scenic routes to Sedona, and the stops worth exploring.</p>
+    <div class="cta-block__buttons">
+      <a href="https://www.riders-share.com/guided-motorcycle-tours/near/Phoenix-AZ" target="_blank" rel="noopener noreferrer" class="cta-btn-primary">Guided Tours Near Phoenix &rarr;</a>
+      <a href="https://www.riders-share.com/motorcycles/San-Diego--CA" target="_blank" rel="noopener noreferrer" class="cta-btn-secondary">Rent a Bike in San Diego</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer__disclaimer">Business links are provided for convenience. Riders Share is not affiliated with any of the businesses listed above, and all opinions are our own.</p>
+    <a href="https://www.riders-share.com/blog/article/san-diego-to-phoenix-road-trip-guide" target="_blank" rel="noopener noreferrer" class="footer__article-link">Read the full article on Riders Share &rarr;</a>
+    <p class="footer__copyright">&copy; Riders Share | Peer-to-peer motorcycle rentals</p>
+  </footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   DATA
+   ═══════════════════════════════════════════ */
+const STOPS = [
+  {
+    id: "san-diego",
+    city: "San Diego, CA",
+    mile: 0,
+    driveFromPrev: 0,
+    driveMinFromPrev: 0,
+    tips: {
+      gas: "Plenty of stations. Fill up before leaving the city.",
+      food: "Endless options in Old Town and Gaslamp Quarter.",
+      water: "Stock up here. Desert stretches ahead.",
+      cell: "Full coverage, all carriers."
+    },
+    spots: [
+      { name: "Old Town San Diego", desc: "Historic district with restored buildings, museums, and shops celebrating Spanish and Mexican heritage.", gbp: "https://maps.app.goo.gl/nP8PZjE6CeQMsXbW7" },
+      { name: "Balboa Park", desc: "Massive urban park with museums, gardens, and the San Diego Zoo.", gbp: "https://maps.app.goo.gl/m4WMwvh1FrZ3GKBV8" }
+    ]
+  },
+  {
+    id: "el-cajon",
+    city: "El Cajon, CA",
+    mile: 17,
+    driveFromPrev: 17,
+    driveMinFromPrev: 20,
+    tips: {
+      gas: "Multiple stations off I-8.",
+      food: "Fast food and local Mexican restaurants.",
+      water: "Convenience stores available.",
+      cell: "Full coverage."
+    },
+    spots: [
+      { name: "Sycuan Casino Resort", desc: "Popular casino resort with entertainment and dining options.", gbp: "https://maps.app.goo.gl/8eSJF6V8vnnkRPQy5" }
+    ]
+  },
+  {
+    id: "alpine",
+    city: "Alpine, CA",
+    mile: 30,
+    driveFromPrev: 13,
+    driveMinFromPrev: 15,
+    tips: {
+      gas: "A couple stations in town. Worth topping off.",
+      food: "Local diners and pizza spots.",
+      water: "Last reliable stop before Pine Valley.",
+      cell: "Good coverage, may weaken ahead."
+    },
+    spots: [
+      { name: "Viejas Casino & Resort", desc: "Gaming, shopping, and entertainment with a premium outlet center.", gbp: "https://maps.app.goo.gl/dWCfQxVLoAhS8XBj6" }
+    ]
+  },
+  {
+    id: "pine-valley",
+    city: "Pine Valley, CA",
+    mile: 47,
+    driveFromPrev: 17,
+    driveMinFromPrev: 18,
+    tips: {
+      gas: "Limited. Fill up in Alpine if low.",
+      food: "Pine Valley House cafe is a local favorite.",
+      water: "Bring your own for hikes.",
+      cell: "Spotty in the forest. Download offline maps."
+    },
+    spots: [
+      { name: "Cleveland National Forest", desc: "Scenic views, hiking trails, and campgrounds with several trailheads.", gbp: "https://maps.app.goo.gl/XdqvVnbRp3TRkUKD6" }
+    ]
+  },
+  {
+    id: "boulevard-campo",
+    city: "Boulevard & Campo, CA",
+    mile: 65,
+    driveFromPrev: 18,
+    driveMinFromPrev: 20,
+    tips: {
+      gas: "Very limited. Do not rely on finding a station here.",
+      food: "Minimal options. Pack snacks.",
+      water: "Bring your own.",
+      cell: "Weak to no signal in spots."
+    },
+    spots: [
+      { name: "Pacific Southwest Railway Museum", desc: "Historic trains and train rides on select days. Check schedule before visiting.", gbp: "https://maps.app.goo.gl/hKtM1fVFNuX8HGdS7" },
+      { name: "Wisteria Candy Cottage", desc: "Family-owned candy shop with handmade treats.", gbp: null }
+    ]
+  },
+  {
+    id: "imperial-dunes",
+    city: "Imperial Sand Dunes, CA",
+    mile: 120,
+    driveFromPrev: 55,
+    driveMinFromPrev: 50,
+    tips: {
+      gas: "No stations at the dunes. Fill up before or in Yuma.",
+      food: "Nothing here. Bring everything you need.",
+      water: "Critical: bring at least 1 gallon per person. Extreme heat zone.",
+      cell: "Minimal to no coverage."
+    },
+    spots: [
+      { name: "Imperial Sand Dunes Recreation Area", desc: "Vast sand dunes popular for off-road vehicles, sandboarding, and hiking.", gbp: "https://maps.app.goo.gl/R9JxU1Rnb34XkxWi8" }
+    ]
+  },
+  {
+    id: "yuma",
+    city: "Yuma, AZ",
+    mile: 180,
+    driveFromPrev: 60,
+    driveMinFromPrev: 55,
+    tips: {
+      gas: "Full services. Fill up for the long stretch to Gila Bend.",
+      food: "Lutes Casino (a restaurant, not a casino) is a legendary local spot. Great Mexican food throughout town.",
+      water: "Stock up. Next reliable water is 115 miles away.",
+      cell: "Full coverage in town. Spotty between here and Gila Bend."
+    },
+    spots: [
+      { name: "Yuma Territorial Prison State Historic Park", desc: "Historic territorial prison with exhibits and guided tours.", gbp: "https://maps.app.goo.gl/58uCREiJAFKEJZMK8" },
+      { name: "Colorado River State Historic Park", desc: "History of the Colorado River and regional development.", gbp: "https://maps.app.goo.gl/sQbP2Jv1QdA4aPP3A" },
+      { name: "Martha's Gardens Date Farm", desc: "Working date farm. Don't skip the fresh date shake.", gbp: "https://maps.app.goo.gl/LvADpDnJA7yb6jHW8" }
+    ]
+  },
+  {
+    id: "gila-bend",
+    city: "Gila Bend, AZ",
+    mile: 295,
+    driveFromPrev: 115,
+    driveMinFromPrev: 100,
+    tips: {
+      gas: "A few stations. Fill up since it is a long desert stretch behind and ahead of you.",
+      food: "Space Age Lodge restaurant is a quirky pit stop.",
+      water: "Restock here.",
+      cell: "Basic coverage in town. Drops off quickly outside."
+    },
+    spots: [
+      { name: "Painted Rock Petroglyph Site", desc: "Ancient petroglyphs dating back thousands of years. Located north of town.", gbp: "https://maps.app.goo.gl/BhFq8bNKo8ZLjUvV8" }
+    ]
+  },
+  {
+    id: "casa-grande",
+    city: "Casa Grande, AZ",
+    mile: 330,
+    driveFromPrev: 35,
+    driveMinFromPrev: 35,
+    tips: {
+      gas: "Full services.",
+      food: "Chain restaurants and a few local spots.",
+      water: "Easy to find.",
+      cell: "Full coverage."
+    },
+    spots: [
+      { name: "Casa Grande Ruins National Monument", desc: "Remains of a large ancient Hohokam structure with guided tours and educational exhibits.", gbp: "https://maps.app.goo.gl/fAF2LCXcHqWMh3Gd7" }
+    ]
+  },
+  {
+    id: "phoenix",
+    city: "Phoenix, AZ",
+    mile: 355,
+    driveFromPrev: 25,
+    driveMinFromPrev: 30,
+    tips: {
+      gas: "Everywhere.",
+      food: "Too many great options to list. Check out the Roosevelt Row arts district for local flavor.",
+      water: "All set.",
+      cell: "Full coverage, all carriers."
+    },
+    spots: [
+      { name: "Desert Botanical Garden", desc: "World-class collection of desert plants from around the world.", gbp: "https://maps.app.goo.gl/Cxq2KJjWdqz9DWWZ8" },
+      { name: "Musical Instrument Museum", desc: "Instruments and music from every country in the world. Truly unique.", gbp: "https://maps.app.goo.gl/W1JpA8eNvBBhFMfA6" },
+      { name: "Heard Museum", desc: "Outstanding collection of Native American art and history.", gbp: "https://maps.app.goo.gl/aUhDnQgVMvtNpxd89" },
+      { name: "South Mountain Park", desc: "One of the largest municipal parks in the country. Great sunset views.", gbp: "https://maps.app.goo.gl/XjiFm7uNcFf5gFfS9" }
+    ]
+  }
+];
+
+const TIP_ICONS = { gas: "\u26FD", food: "\uD83C\uDF74", water: "\uD83D\uDCA7", cell: "\uD83D\uDCF6" };
+const TIP_LABELS = { gas: "Gas", food: "Food", water: "Water", cell: "Cell Signal" };
+
+/* ═══════════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════════ */
+const selectedStops = new Set(["san-diego", "phoenix"]);
+const openTips = new Set();
+const openAttractions = new Set();
+let allExpanded = false;
+
+/* ═══════════════════════════════════════════
+   RENDER
+   ═══════════════════════════════════════════ */
+function formatDrive(min) {
+  if (min >= 60) return Math.floor(min / 60) + "h " + (min % 60) + "m";
+  return min + "m";
+}
+
+function renderStops() {
+  const container = document.getElementById("stopsList");
+  let html = "";
+
+  STOPS.forEach((stop, i) => {
+    // Drive connector between stops
+    if (i > 0) {
+      html += `<div class="drive-connector">
+        <div class="drive-connector__line"></div>
+        <span class="drive-connector__text">${stop.driveFromPrev} mi &middot; ~${formatDrive(stop.driveMinFromPrev)}</span>
+        <div class="drive-connector__line"></div>
+      </div>`;
+    }
+
+    const isSelected = selectedStops.has(stop.id);
+    const tipsOpen = openTips.has(stop.id);
+    const attractionsOpen = openAttractions.has(stop.id);
+
+    html += `<div class="stop-card ${isSelected ? 'selected' : ''}" id="card-${stop.id}">
+      <div class="stop-card__header">
+        <button class="stop-card__check ${isSelected ? 'checked' : ''}" onclick="toggleStop('${stop.id}')" aria-label="${isSelected ? 'Remove' : 'Add'} ${stop.city}">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="stop-card__info">
+          <div class="stop-card__title-row">
+            <h3 class="stop-card__city">${stop.city}</h3>
+            <span class="stop-card__mile">Mile ${stop.mile}</span>
+            ${stop.driveMinFromPrev > 0 ? `<span class="stop-card__drive-from">${formatDrive(stop.driveMinFromPrev)} from prev</span>` : ''}
+          </div>
+          <div class="stop-card__toggles">
+            <button class="stop-card__toggle-btn ${tipsOpen ? 'active' : ''}" onclick="toggleTips('${stop.id}')">${tipsOpen ? 'Hide Local Tips \u25B4' : 'Local Tips \u25BE'}</button>
+            <button class="stop-card__toggle-btn ${attractionsOpen ? 'active' : ''}" onclick="toggleAttractions('${stop.id}')">${attractionsOpen ? 'Hide Attractions \u25B4' : stop.spots.length + ' Attraction' + (stop.spots.length > 1 ? 's' : '') + ' \u25BE'}</button>
+          </div>
+        </div>
+      </div>`;
+
+    // Tips
+    html += `<div class="stop-card__tips ${tipsOpen ? 'visible' : ''}" id="tips-${stop.id}">
+      <div class="tips-grid">`;
+    for (const [key, val] of Object.entries(stop.tips)) {
+      html += `<div class="tip-card">
+        <span class="tip-card__icon">${TIP_ICONS[key]}</span>
+        <div>
+          <div class="tip-card__label">${TIP_LABELS[key]}</div>
+          <div class="tip-card__text">${val}</div>
+        </div>
+      </div>`;
+    }
+    html += `</div></div>`;
+
+    // Attractions
+    html += `<div class="stop-card__attractions ${attractionsOpen ? 'visible' : ''}" id="attr-${stop.id}">`;
+    stop.spots.forEach(spot => {
+      html += `<div class="attraction">
+        <div class="attraction__header">
+          <span class="attraction__name">${spot.name}</span>
+          ${spot.gbp ? `<a href="${spot.gbp}" target="_blank" rel="noopener noreferrer" class="attraction__gbp">View on Google Maps \u2197</a>` : ''}
+        </div>
+        <div class="attraction__desc">${spot.desc}</div>
+      </div>`;
+    });
+    html += `</div>`;
+
+    html += `</div>`; // end stop-card
+  });
+
+  container.innerHTML = html;
+}
+
+function renderSummary() {
+  const el = document.getElementById("tripSummary");
+  const statsEl = document.getElementById("tripStats");
+  const routeEl = document.getElementById("tripRoute");
+
+  if (selectedStops.size === 0) {
+    el.classList.remove("visible");
+    return;
+  }
+
+  const selected = STOPS.filter(s => selectedStops.has(s.id)).sort((a, b) => a.mile - b.mile);
+  const totalMiles = selected.length > 1 ? selected[selected.length - 1].mile - selected[0].mile : 0;
+
+  let totalMin = 0;
+  for (let i = 1; i < selected.length; i++) {
+    const prevIdx = STOPS.findIndex(s => s.id === selected[i - 1].id);
+    const currIdx = STOPS.findIndex(s => s.id === selected[i].id);
+    for (let j = prevIdx + 1; j <= currIdx; j++) {
+      totalMin += STOPS[j].driveMinFromPrev;
+    }
+  }
+
+  const hours = Math.floor(totalMin / 60);
+  const mins = totalMin % 60;
+  const spotCount = selected.reduce((sum, s) => sum + s.spots.length, 0);
+
+  statsEl.innerHTML = [
+    { val: selected.length, lab: "Stops" },
+    { val: totalMiles + " mi", lab: "Distance" },
+    { val: hours + "h " + mins + "m", lab: "Drive Time" },
+    { val: spotCount, lab: "Attractions" }
+  ].map(s => `<div style="text-align:center"><div class="trip-summary__stat-val">${s.val}</div><div class="trip-summary__stat-lab">${s.lab}</div></div>`).join("");
+
+  routeEl.innerHTML = selected.map((s, i) => {
+    const cityShort = s.city.split(",")[0];
+    return `<span>${cityShort}</span>` + (i < selected.length - 1 ? `<span class="trip-summary__route-arrow">&rarr;</span>` : '');
+  }).join("");
+
+  el.classList.add("visible");
+}
+
+/* ═══════════════════════════════════════════
+   INTERACTIONS
+   ═══════════════════════════════════════════ */
+function toggleStop(id) {
+  if (selectedStops.has(id)) selectedStops.delete(id);
+  else selectedStops.add(id);
+  renderStops();
+  renderSummary();
+}
+
+function toggleTips(id) {
+  if (openTips.has(id)) openTips.delete(id);
+  else openTips.add(id);
+  renderStops();
+}
+
+function toggleAttractions(id) {
+  if (openAttractions.has(id)) openAttractions.delete(id);
+  else openAttractions.add(id);
+  renderStops();
+}
+
+function toggleSelectAll() {
+  const btn = document.getElementById("selectAllBtn");
+  if (selectedStops.size === STOPS.length) {
+    selectedStops.clear();
+    btn.textContent = "Select All Stops";
+  } else {
+    STOPS.forEach(s => selectedStops.add(s.id));
+    btn.textContent = "Deselect All Stops";
+  }
+  renderStops();
+  renderSummary();
+}
+
+function toggleExpandAll() {
+  const btn = document.getElementById("expandAllBtn");
+  allExpanded = !allExpanded;
+  if (allExpanded) {
+    STOPS.forEach(s => openAttractions.add(s.id));
+    btn.textContent = "Collapse All Attractions";
+  } else {
+    openAttractions.clear();
+    btn.textContent = "Expand All Attractions";
+  }
+  renderStops();
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════ */
+renderStops();
+renderSummary();
+</script>
+
+</body>
+</html>
